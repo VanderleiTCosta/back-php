@@ -3,7 +3,6 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Http\Middleware\HandleCors; // Importe a classe HandleCors
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -13,22 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // Adicione o middleware de CORS globalmente
-        $middleware->use([
-            [HandleCors::class, [
-                'paths' => ['api/*'], // Aplica o CORS a todas as rotas de API
-                'allowed_methods' => ['*'], // Permite todos os métodos (GET, POST, PUT, etc.)
-                'allowed_origins' => [
-                    'http://localhost:3000', // URL do seu frontend
-                    'http://127.0.0.1:3000',
-                ],
-                'allowed_origins_patterns' => [],
-                'allowed_headers' => ['*'], // Permite todos os cabeçalhos
-                'exposed_headers' => [],
-                'max_age' => 0,
-                'supports_credentials' => false,
-            ]]
-        ]);
+        // Não precisamos mais adicionar o HandleCors aqui,
+        // pois o Laravel já o carrega por padrão e agora
+        // ele lerá nosso novo arquivo config/cors.php
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
