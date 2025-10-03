@@ -1,5 +1,24 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
+
+Route::get('/debug-db', function () {
+    try {
+        return response()->json([
+            'message' => 'Conectado com sucesso!',
+            'database_name' => DB::connection()->getDatabaseName(),
+            'database_host' => DB::connection()->getConfig('host'),
+            'database_port' => DB::connection()->getConfig('port'),
+            'database_user' => DB::connection()->getConfig('username'),
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => 'Erro ao conectar ao banco de dados!',
+            'error' => $e->getMessage(),
+        ], 500);
+    }
+});
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
