@@ -1,20 +1,25 @@
 services:
-  # Define o serviço do seu backend Laravel
   - type: web
     name: proposta-backend
     env: docker
     plan: free
     healthCheckPath: /
     dockerfilePath: ./Dockerfile
-    
+    buildCommand: php artisan migrate --force  # Adicionar esta linha
 
-    # Adicione suas variáveis de ambiente aqui
-    # Substitua os valores 'SEU_VALOR_AQUI' pelos valores reais do seu banco de dados no Render
     envVars:
       - key: APP_KEY
         generateValue: true
       - key: JWT_SECRET
         generateValue: true
+
+      # Adicione as 3 chaves abaixo para melhorar os logs
+      - key: APP_DEBUG
+        value: true # Mude para true TEMPORARIAMENTE para ver o erro no Postman
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: LOG_LEVEL
+        value: debug
       
       # --- Configurações do Banco de Dados Externo (Supabase) ---
       - key: DB_CONNECTION
