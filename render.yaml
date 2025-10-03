@@ -6,8 +6,7 @@ services:
     plan: free
     healthCheckPath: /
     dockerfilePath: ./Dockerfile
-    # O COMANDO CRUCIAL QUE ESTAVA FALTANDO
-    startCommand: "php artisan serve --host=0.0.0.0 --port=${PORT}"
+    
 
     # Adicione suas variáveis de ambiente aqui
     # Substitua os valores 'SEU_VALOR_AQUI' pelos valores reais do seu banco de dados no Render

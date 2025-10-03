@@ -16,7 +16,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 # 5. Copie os arquivos de dependência e instale-os
-# Isso otimiza o cache do Docker, reinstalando dependências apenas quando o composer.json/lock muda
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --no-scripts --optimize-autoloader
 
@@ -30,8 +29,6 @@ RUN composer run-script post-autoload-dump --no-dev
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
     chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# 9. Expõe a porta que o PHP-FPM vai usar
-EXPOSE 9000
-
-# 10. Comando para iniciar o servidor PHP-FPM (o Render vai sobrescrever isso com o Start Command, mas é uma boa prática ter)
-CMD ["php-fpm"]
+# 9. Comando final para iniciar o servidor web do Laravel
+# ESTA É A LINHA QUE CORRIGE O PROBLEMA
+CMD php artisan serve --host=0.0.0.0 --port=${PORT}
