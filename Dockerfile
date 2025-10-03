@@ -32,4 +32,5 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 
 # 9. Comando final para iniciar o servidor web do Laravel
 # ESTA É A LINHA QUE CORRIGE O PROBLEMA
-CMD php artisan serve --host=0.0.0.0 --port=${PORT}
+COPY start.sh .
+CMD ["./start.sh"]

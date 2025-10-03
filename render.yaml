@@ -5,7 +5,6 @@ services:
     plan: free
     healthCheckPath: /
     dockerfilePath: ./Dockerfile
-    buildCommand: php artisan migrate --force  # Adicionar esta linha
 
     envVars:
       - key: APP_KEY
