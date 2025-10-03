@@ -1,30 +1,37 @@
-# Use uma imagem base oficial do PHP com o Composer
-FROM composer:2 as vendor
-
-# Define o diretório de trabalho
-WORKDIR /app
-
-# Copia os arquivos do Composer e instala as dependências
-COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader
-
-# Usa uma imagem PHP-FPM otimizada para produção
+# 1. Use uma imagem base oficial do PHP 8.2
 FROM php:8.2-fpm-alpine
 
-# Instala as extensões PHP necessárias para o Laravel
-RUN docker-php-ext-install pdo pdo_mysql
+# 2. Instale as dependências do sistema e as extensões PHP necessárias para o Laravel
+RUN apk add --no-cache \
+        libpng-dev \
+        libzip-dev \
+        zip \
+        unzip \
+        && docker-php-ext-install pdo pdo_mysql bcmath zip
 
-# Copia os arquivos da aplicação e as dependências já instaladas
+# 3. Instale o Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# 4. Defina o diretório de trabalho
 WORKDIR /var/www/html
-COPY . .
-COPY --from=vendor /app/vendor/ ./vendor/
 
-# Define as permissões corretas para o storage e cache
+# 5. Copie os arquivos de dependência e instale-os
+# Isso otimiza o cache do Docker, reinstalando dependências apenas quando o composer.json/lock muda
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --no-scripts --optimize-autoloader
+
+# 6. Copie o resto dos arquivos da sua aplicação
+COPY . .
+
+# 7. Rode os scripts do composer que foram pulados anteriormente
+RUN composer run-script post-autoload-dump --no-dev
+
+# 8. Defina as permissões corretas para o storage e cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
     chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Expõe a porta que o PHP-FPM vai usar
+# 9. Expõe a porta que o PHP-FPM vai usar
 EXPOSE 9000
 
-# Comando para iniciar o servidor PHP-FPM
+# 10. Comando para iniciar o servidor PHP-FPM (o Render vai sobrescrever isso com o Start Command, mas é uma boa prática ter)
 CMD ["php-fpm"]
