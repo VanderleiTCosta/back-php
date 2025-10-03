@@ -34,3 +34,5 @@ services:
         value: postgres
       - key: DB_PASSWORD
         value: Vanderley5247@
+      - key: DB_SSLMODE 
+        value: require
