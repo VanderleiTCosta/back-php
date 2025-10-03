@@ -3,28 +3,26 @@ services:
   - type: web
     name: proposta-backend
     env: docker
-    # Garante que o build aconteça antes de tentar iniciar
     plan: free
     healthCheckPath: /
     dockerfilePath: ./Dockerfile
     # O COMANDO CRUCIAL QUE ESTAVA FALTANDO
     startCommand: "php artisan serve --host=0.0.0.0 --port=${PORT}"
-    
+
     # Adicione suas variáveis de ambiente aqui
     # Substitua os valores 'SEU_VALOR_AQUI' pelos valores reais do seu banco de dados no Render
     envVars:
       - key: APP_KEY
         generateValue: true # O Render irá gerar a APP_KEY para você
       - key: DB_CONNECTION
-        value: pgsql
+        value: mysql
       - key: DB_HOST
-        # Use o "Internal Hostname" do seu banco de dados do Render
-        value: SEU_DB_HOST_AQUI
+        value: mysql.railway.internal
       - key: DB_PORT
-        value: 5432
+        value: 3306
       - key: DB_DATABASE
-        value: SEU_DB_NOME_AQUI
+        value: railway
       - key: DB_USERNAME
-        value: SEU_DB_USUARIO_AQUI
+        value: root
       - key: DB_PASSWORD
-        value: SEU_DB_SENHA_AQUI
+        value: RtBPuvhHAzBSLQfFBYNJCFrepfdnNcJA
