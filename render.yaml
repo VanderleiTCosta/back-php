@@ -13,6 +13,8 @@ services:
     envVars:
       - key: APP_KEY
         generateValue: true
+      - key: JWT_SECRET
+        generateValue: true
       
       # --- Configurações do Banco de Dados Externo (Supabase) ---
       - key: DB_CONNECTION
