@@ -7,8 +7,7 @@ RUN apk add --no-cache \
         libzip-dev \
         zip \
         unzip \
-        postgresql-dev \
-        && docker-php-ext-install pdo pdo_pgsql bcmath zip
+        && docker-php-ext-install pdo pdo_mysql bcmath zip
 
 # 3. Instale o Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

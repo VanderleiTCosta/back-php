@@ -7,31 +7,27 @@ services:
     dockerfilePath: ./Dockerfile
 
     envVars:
-      - key: APP_KEY
-        generateValue: true
-      - key: JWT_SECRET
-        generateValue: true
+  - key: APP_KEY
+    generateValue: true
+  - key: JWT_SECRET
+    generateValue: true
+  - key: APP_DEBUG
+    value: true
+  - key: LOG_CHANNEL
+    value: stderr
+  - key: LOG_LEVEL
+    value: debug
 
-      # Adicione as 3 chaves abaixo para melhorar os logs
-      - key: APP_DEBUG
-        value: true # Mude para true TEMPORARIAMENTE para ver o erro no Postman
-      - key: LOG_CHANNEL
-        value: stderr
-      - key: LOG_LEVEL
-        value: debug
-      
-      # --- Configurações do Banco de Dados Externo (Supabase) ---
-      - key: DB_CONNECTION
-        value: pgsql
-      - key: DB_HOST
-        value: db.mspafghuapmdfsrlfyvv.supabase.co
-      - key: DB_PORT
-        value: 5432
-      - key: DB_DATABASE
-        value: postgres
-      - key: DB_USERNAME
-        value: postgres
-      - key: DB_PASSWORD
-        value: Vanderley5247@
-      - key: DB_SSLMODE 
-        value: require
+  # --- Configurações do Banco de Dados Netrevetech (MySQL) ---
+  - key: DB_CONNECTION
+    value: mysql
+  - key: DB_HOST
+    value: 151.243.218.177
+  - key: DB_PORT
+    value: 3306 
+  - key: DB_DATABASE
+    value: db-proposta
+  - key: DB_USERNAME
+    value: proposta
+  - key: DB_PASSWORD
+    value: proposta123
