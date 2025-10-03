@@ -12,16 +12,18 @@ services:
     # Substitua os valores 'SEU_VALOR_AQUI' pelos valores reais do seu banco de dados no Render
     envVars:
       - key: APP_KEY
-        generateValue: true # O Render irá gerar a APP_KEY para você
+        generateValue: true
+      
+      # --- Configurações do Banco de Dados Externo (Supabase) ---
       - key: DB_CONNECTION
-        value: mysql
+        value: pgsql
       - key: DB_HOST
-        value: mysql.railway.internal
+        value: db.mufmzesdssqjwqtqifom.supabase.co
       - key: DB_PORT
-        value: 3306
+        value: 5432
       - key: DB_DATABASE
-        value: railway
+        value: postgres
       - key: DB_USERNAME
-        value: root
+        value: postgres
       - key: DB_PASSWORD
-        value: RtBPuvhHAzBSLQfFBYNJCFrepfdnNcJA
+        value: Vanderley5247@
