@@ -25,7 +25,7 @@ services:
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_HOST
-        value: mspafghuapmdfsrlfyvv.supabase.co
+        value: db.mspafghuapmdfsrlfyvv.supabase.co
       - key: DB_PORT
         value: 5432
       - key: DB_DATABASE
